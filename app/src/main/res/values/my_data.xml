@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="my_data_list">
+
+        <item>My data item1</item>
+        <item>My data item2</item>
+        <item>Mu data item3</item>
+        <item>Mu data item4</item>
+        <item>Mu data item5</item>
+        <item>Mu data item6</item>
+        <item>Mu data item7</item>
+        <item>Mu data item8</item>
+        <item>Mu data item9</item>
+        <item>Mu data item10</item>
+        <item>Mu data item11</item>
+        <item>Mu data item12</item>
+        <item>Mu data item13</item>
+        <item>Mu data item14</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+        <item>Mu data item15</item>
+
+    </string-array>
+
+</resources>
