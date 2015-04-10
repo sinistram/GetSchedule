@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity
         i.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false);
         i.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
         i.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_FILE);
-
+        i.addCategory("pdf");
         startActivityForResult(i, 0);
 //        Dialog dialog = new Dialog(this, "AAA", "BBB");
 //        dialog.addCancelButton("Cancel");
