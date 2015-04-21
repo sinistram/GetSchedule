@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.Browser;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -58,7 +59,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewImage=new ImageView(this);
         setContentView(R.layout.activity_main);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -185,7 +185,11 @@ public class MainActivity extends ActionBarActivity
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    Intent intent = new Intent(Intent.ACTION_PICK,null);
+//                    intent.setType("text/plain");
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
                     startActivityForResult(intent, 2);
 
                 }
@@ -197,13 +201,12 @@ public class MainActivity extends ActionBarActivity
         builder.show();
     }
 
-    ImageView viewImage;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
+            if (requestCode == 1) { //take photo
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -218,7 +221,7 @@ public class MainActivity extends ActionBarActivity
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
 
-                    viewImage.setImageBitmap(bitmap);
+
 
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
@@ -227,6 +230,7 @@ public class MainActivity extends ActionBarActivity
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    Toast.makeText(this, file.getPath(), Toast.LENGTH_LONG).show();
                     try {
                         outFile = new FileOutputStream(file);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
@@ -242,7 +246,7 @@ public class MainActivity extends ActionBarActivity
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == 2) {
+            } else if (requestCode == 2) { //from gallery
 
                 Uri selectedImage = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
@@ -252,8 +256,8 @@ public class MainActivity extends ActionBarActivity
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image from gallery......******************.........", picturePath + "");
-                viewImage.setImageBitmap(thumbnail);
+                Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
+
             }
         }
     }
