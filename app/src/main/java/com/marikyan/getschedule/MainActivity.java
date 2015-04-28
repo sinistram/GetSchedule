@@ -261,7 +261,10 @@ public class MainActivity extends ActionBarActivity
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
+                Intent ocrResult = new Intent(this, OcrResult.class);
+                ocrResult.putExtra("IMAGE_PATH", picturePath);
+                startActivity(ocrResult);
+           //     Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
 
             }
             else if (requestCode == 3 ) { //from gallery pdf
