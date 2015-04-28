@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.Browser;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -169,7 +171,7 @@ public class MainActivity extends ActionBarActivity
 
     private void selectImage() {
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = { "Take Photo", "Choose image from Gallery", "Choose pdf from Gallery","Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Add Photo!");
@@ -183,15 +185,18 @@ public class MainActivity extends ActionBarActivity
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);
                 }
-                else if (options[item].equals("Choose from Gallery"))
+                else if (options[item].equals("Choose image from Gallery"))
                 {
-                    //Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    Intent intent = new Intent(Intent.ACTION_PICK,null);
-//                    intent.setType("text/plain");
-                    Intent intent = new Intent(Intent.ACTION_PICK);
+                   // Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK,null);
                     intent.setType("image/*");
                     startActivityForResult(intent, 2);
 
+                }
+                else if(options[item].equals("Choose pdf from Gallery")) {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("application/pdf");
+                    startActivityForResult(intent, 3);
                 }
                 else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -246,7 +251,7 @@ public class MainActivity extends ActionBarActivity
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == 2) { //from gallery
+            } else if (requestCode == 2) { //from gallery img
 
                 Uri selectedImage = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
@@ -259,7 +264,45 @@ public class MainActivity extends ActionBarActivity
                 Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
 
             }
+            else if (requestCode == 3 ) { //from gallery pdf
+                Uri uri = data.getData();
+                String picturePath = uri.toString();
+                //    File myFile = new File(uri.toString());
+//                String picturePath = null;
+//                try {
+//                    picturePath = myFile.getName();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                //    String picturePath = getFileName(uri);
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setMessage(picturePath);
+//                builder.show();
+                Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
+            }
         }
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+//            int cut = result.lastIndexOf('/');
+//            if (cut != -1) {
+//                result = result.substring(cut + 1);
+//            }
+        }
+        return result;
     }
 
     /**
