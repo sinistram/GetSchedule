@@ -82,6 +82,7 @@ public class AsyncUploadFileProcessTask extends AsyncTask<String, String, Boolea
 
             publishProgress( "Uploading image...");
 
+            //TODO: language
             String language = "English"; // Comma-separated list: Japanese,English or German,French,Spanish etc.
 
             ProcessingSettings processingSettings = new ProcessingSettings();

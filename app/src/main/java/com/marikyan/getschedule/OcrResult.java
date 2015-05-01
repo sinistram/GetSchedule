@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
@@ -53,11 +54,24 @@ public class OcrResult extends Activity {
             } finally {
                 fis.close();
             }
-
-            displayMessage(contents.toString());
+            showText(contents.toString());
+  //          displayMessage(contents.toString());
         } catch (Exception e) {
-            displayMessage("Error: " + e.getMessage());
+    //        displayMessage("Error: " + e.getMessage());
         }
+    }
+
+    public void showText(String text) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage(text)
+                .setCancelable(true);
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
     }
 
     public void displayMessage( String text )

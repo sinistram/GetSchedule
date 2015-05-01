@@ -27,5 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
     compile 'com.nineoldandroids:library:2.4.0+'
-    compile 'com.nononsenseapps:filepicker:+'
+   // compile 'com.nononsenseapps:filepicker:+'
 }
