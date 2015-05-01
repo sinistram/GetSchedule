@@ -47,6 +47,6 @@ public class BusCardSettings {
     }
 
     private String language = "English";
-    private OutputFormat outputFormat = OutputFormat.vCard;
+    private OutputFormat outputFormat = OutputFormat.vCard;  //TODO old value vCard
 }
 

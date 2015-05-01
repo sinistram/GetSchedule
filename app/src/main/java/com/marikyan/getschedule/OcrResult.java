@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class OcrResult extends Activity {
 
 
-    public final static String outputFilePath = "result.txt";
+    public final static String outputFilePath = "result.xlsx";
     TextView tv;
 
 
@@ -57,7 +57,7 @@ public class OcrResult extends Activity {
             showText(contents.toString());
   //          displayMessage(contents.toString());
         } catch (Exception e) {
-    //        displayMessage("Error: " + e.getMessage());
+            showText("Error: " + e.getMessage());
         }
     }
 
@@ -76,7 +76,15 @@ public class OcrResult extends Activity {
 
     public void displayMessage( String text )
     {
-        tv.post( new MessagePoster( text ) );
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage(text)
+                .setCancelable(true);
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
     class MessagePoster implements Runnable {

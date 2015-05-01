@@ -38,6 +38,6 @@ public class ProcessingSettings {
     }
 
     private String language = "English";
-    private OutputFormat outputFormat = OutputFormat.pdfSearchable;
+    private OutputFormat outputFormat = OutputFormat.xlsx; // TODO old value pdfSearchable
 }
 
