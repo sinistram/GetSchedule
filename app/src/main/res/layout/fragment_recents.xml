@@ -28,8 +28,16 @@
             android:background="#ffff5722"
             android:onClick="button_add_click"
             materialdesign:iconDrawable="@drawable/add_button"/>
-    </RelativeLayout>
 
+
+        <ImageView
+            android:id="@+id/viewImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/add_button"/>
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
