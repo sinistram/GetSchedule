@@ -1,9 +1,11 @@
 package com.marikyan.getschedule;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.marikyan.handling.XLSXHandling;
 
 
 public class OcrResult extends Activity {
@@ -41,21 +45,34 @@ public class OcrResult extends Activity {
         if (!success)
             return;
         try {
-            StringBuffer contents = new StringBuffer();
 
-            FileInputStream fis = openFileInput(outputFilePath);
+            StringBuffer contents = new StringBuffer();
+            File xlsxFile = new File(getFilesDir() + "/" + outputFilePath);
+            List<List<String>> res = XLSXHandling.getDataList(xlsxFile);
+         //   FileInputStream fis = openFileInput(outputFilePath);
+//
+//            if (xlsxFile.exists()) {
+//                Toast.makeText(this, fis.getFD().toString(), Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(this, fis.getChannel().toString(), Toast.LENGTH_LONG).show();
+//            }
+
             try {
-                Reader reader = new InputStreamReader(fis, "UTF-8");
-                BufferedReader bufReader = new BufferedReader(reader);
-                String text = null;
-                while ((text = bufReader.readLine()) != null) {
-                    contents.append(text).append(System.getProperty("line.separator"));
+//                Reader reader = new InputStreamReader(fis, "UTF-8");
+//                BufferedReader bufReader = new BufferedReader(reader);
+//                String text = null;
+//
+//                while ((text = bufReader.readLine()) != null) {
+//                    contents.append(text).append(System.getProperty("line.separator"));
+                for (List<String> stringList:res) {
+                    contents.append(stringList.toString());
                 }
+//                }
             } finally {
-                fis.close();
+               // fis.close();
             }
             showText(contents.toString());
-  //          displayMessage(contents.toString());
+            displayMessage(contents.toString());
         } catch (Exception e) {
             showText("Error: " + e.getMessage());
         }
@@ -74,8 +91,7 @@ public class OcrResult extends Activity {
 
     }
 
-    public void displayMessage( String text )
-    {
+    public void displayMessage(String text) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setMessage(text)
@@ -88,14 +104,13 @@ public class OcrResult extends Activity {
     }
 
     class MessagePoster implements Runnable {
-        public MessagePoster( String message )
-        {
+        public MessagePoster(String message) {
             _message = message;
         }
 
         public void run() {
-            tv.append( _message + "\n" );
-            setContentView( tv );
+            tv.append(_message + "\n");
+            setContentView(tv);
         }
 
         private final String _message;

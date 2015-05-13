@@ -3,6 +3,7 @@ package com.marikyan.handling;
 /**
  * Created by Marikyan on 12-May-15.
  */
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- *
  * @author Marikyan
  */
 public class XLSXHandling {
@@ -103,10 +103,10 @@ public class XLSXHandling {
         /**
          * Accepts objects needed while parsing.
          *
-         * @param styles Table of styles
+         * @param styles  Table of styles
          * @param strings Table of shared strings
-         * @param cols Minimum number of columns to show
-         * @param target Sink for output
+         * @param cols    Minimum number of columns to show
+         * @param target  Sink for output
          */
         public MyXSSFSheetHandler(
                 StylesTable styles,
@@ -313,10 +313,10 @@ public class XLSXHandling {
     /**
      * Creates a new XLSX -> CSV converter
      *
-     * @param pkg The XLSX package to process
-     * @param output The PrintStream to output the CSV to
+     * @param pkg        The XLSX package to process
+     * @param output     The PrintStream to output the CSV to
      * @param minColumns The minimum number of columns to output, or -1 for no
-     * minimum
+     *                   minimum
      */
     private XLSXHandling(OPCPackage pkg, PrintStream output, int minColumns) {
         this.xlsxPackage = pkg;
@@ -379,28 +379,33 @@ public class XLSXHandling {
 
     private static List<List<String>> data = new LinkedList<>();
 
-    public static List<List<String>> getDataList(String filePath) throws Exception {
+    public static List<List<String>> getDataList(File xlsxFile) throws Exception {
 
-        File xlsxFile = new File("C:\\Users\\Marikyan\\Desktop\\0.xlsx");
-        //  File xlsxFile = new File(filePath);
-        if (!xlsxFile.exists()) {
-            System.err.println("Not found or not a file: " + xlsxFile.getPath());
-            return null;
-        }
+        //  File xlsxFile = new File("C:\\Users\\Marikyan\\Desktop\\0.xlsx");
+//        File xlsxFile = new File(filePath);
+//        if (!xlsxFile.exists()) {
+//            System.err.println("Not found or not a file: " + xlsxFile.getPath());
+//            return null;
+//        }
 
         int minColumns = 1;
 
         data = new LinkedList<>();
         // The package open is instantaneous, as it should be.
-        OPCPackage p = OPCPackage.open(xlsxFile.getPath(), PackageAccess.READ);
 
-        XLSXHandling xlsx2csv = new XLSXHandling(p, System.out, minColumns);
-        xlsx2csv.process();
+        try {
+            OPCPackage p = OPCPackage.open(xlsxFile.getPath(), PackageAccess.READ);
+            XLSXHandling xlsx2csv = new XLSXHandling(p, System.out, minColumns);
+            xlsx2csv.process();
+
+        } catch (Exception e) {
+
+        }
         return data;
     }
 
     public static void main(String[] args) throws Exception {
-        getDataList("");
+        // getDataList("");
     }
 
 }

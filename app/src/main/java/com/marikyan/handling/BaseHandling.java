@@ -3,6 +3,7 @@ package com.marikyan.handling;
 /**
  * Created by Marikyan on 12-May-15.
  */
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class BaseHandling {
      */
     private void initializeData(String fileName) throws Exception {
         filePath = fileName;
-        data = XLSXHandling.getDataList(filePath);
+        data = XLSXHandling.getDataList(new File(filePath));
     }
 
     public List<String> getGroupNames(String fileName) throws Exception {
